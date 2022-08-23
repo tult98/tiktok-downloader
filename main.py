@@ -4,8 +4,6 @@ import random
 import string
 import os, os.path
 import time
-import colorama
-from colorama import Fore
 sys.path.append("./libs/")
 
 from bs4 import BeautifulSoup
@@ -157,6 +155,8 @@ def main():
     file = open("./input.txt", "r")
     log_file = safe_open_w(f"./logs/{timestr}.txt", "a")
 
+    print('==================WAIT, YOUR VIDEOS ARE DOWNLOADING==================')
+
     for line_data in enumerate(file):
         line_num, _ = line_data
         try:
@@ -165,14 +165,14 @@ def main():
             url = getVideo(video_url)
             download_video(url["link"], f"{folder_name}/{video_name}.mp4")
             log_file.write(f"Line {line_num + 1}: {video_name} is downloaded.\n")
-            print(Fore.GREEN + f"Line {line_num + 1}: {video_name} is downloaded.")
+            print(f"Line {line_num + 1}: {video_name} is downloaded.")
         except ValueError as error:
             log_file.write(f"Line {line_num + 1}: {error}.\n")
-            print(Fore.RED + f"Line {line_num + 1}: {error}.")
+            print(f"Line {line_num + 1}: {error}.")
             continue
         except Exception as error:
             log_file.write(f"Line {line_num + 1}: Downloading {video_name} is failed. {error}.\n")
-            print(Fore.RED + f"Line {line_num + 1}: Downloading {video_name} is failed. {error}.")
+            print(f"Line {line_num + 1}: Downloading {video_name} is failed. {error}.")
             continue
     
     log_file.close()
