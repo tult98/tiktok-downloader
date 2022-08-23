@@ -4,7 +4,7 @@
 
 ### Pre-install
 
-1. Install all the require libraries by running `pip install -r requirements.txt'
+1. Install all the require libraries by running `pip install -r requirements.txt`
 
 NOTE: Run `pip install wheel` if there are errors related with it.
 
