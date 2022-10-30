@@ -88,7 +88,7 @@ def getVideo(url):
                             'type': 'audio',
                             'description': soup.findAll('h2', attrs={'class':'white-text'})[0].get_text()[13:],
                             'thumbnail': None,
-                            'link': soup.findAll('a',attrs={'class':'btn waves-effect waves-light orange'})[3]['href'],
+                            'link': soup.findAll('a',attrs={'class':'btn waves-effect waves-light orange'})[1]['href'],
                             'url': url
                         }
 
