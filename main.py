@@ -32,7 +32,8 @@ def getToken(url):
         
         return True, cookies, data
     
-    except Exception:
+    except Exception as error:
+        print('getToken error: ', error)
         return None, None, None
 
 def getVideo(url):
@@ -65,7 +66,6 @@ def getVideo(url):
 
             try:
                 response = requests.post('https://musicaldown.com/download', data=data, headers=headers, allow_redirects=False)
-
                 if 'location' in response.headers:
                     if response.headers['location'] == '/en/?err=url invalid!':
                         return {
@@ -86,12 +86,11 @@ def getVideo(url):
                         return {
                             'success': True,
                             'type': 'audio',
-                            'description': soup.findAll('h2', attrs={'class':'white-text'})[0].get_text()[13:],
+                            'description': soup.findAll('h2', attrs={'class':'white-text'})[0].get_text(),
                             'thumbnail': None,
-                            'link': soup.findAll('a',attrs={'class':'btn waves-effect waves-light orange'})[1]['href'],
+                            'link': soup.findAll('a',attrs={'class':'btn waves-effect waves-light orange download'})[0]['href'],
                             'url': url
                         }
-
                     else:
                         return {
                             'success': False,
@@ -104,13 +103,12 @@ def getVideo(url):
                     return {
                         'success': True,
                         'type': 'video',
-                        'description': soup.findAll('h2', attrs={'class':'white-text'})[0].get_text()[23:-19],
-                        'thumbnail': soup.findAll('img',attrs={'class':'responsive-img'})[0]['src'],
-                        'link': soup.findAll('a',attrs={'class':'btn waves-effect waves-light orange'})[3]['href'],
+                        'link': soup.findAll('a',attrs={'class':'btn waves-effect waves-light orange download'})[0]['href'],
                         'url': url
                     }
 
             except Exception as error:
+                print(error)
                 raise Exception("Fail to get the download's URL.")
         
         else:
